@@ -3,10 +3,16 @@ body {
   background-color: #f7f7f7;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+}
+
+header {
+  background-color: #ba0c2f;
+  padding: 20px;
+  text-align: center;
+}
+
+.logo {
+  max-width: 150px;
 }
 
 .container {
@@ -14,13 +20,13 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
+  max-width: 600px;
+  margin: 40px auto;
 }
 
 h2 {
   text-align: center;
-  color: #ba0c2f; /* ABSA Red */
+  color: #ba0c2f;
 }
 
 .form-group {
@@ -31,6 +37,7 @@ h2 {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  color: #333;
 }
 
 .form-group input, .form-group select {
@@ -53,4 +60,15 @@ h2 {
 
 .form-group button:hover {
   background-color: #a5092a;
+}
+
+.director-group {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.director-group label {
+  color: #555;
 }
