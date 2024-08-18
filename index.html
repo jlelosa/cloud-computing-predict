@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABSA SME Onboarding Form</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
+    <header>
+        <img src="absa-logo.png" alt="ABSA Logo" class="logo">
+    </header>
     <div class="container">
-        <h2>ABSA SME Onboarding Form</h2>
-        <form action="#" method="POST">
+        <h2>SME Onboarding Form</h2>
+        <form id="onboarding-form" action="#" method="POST">
             <div class="form-group">
                 <label for="company-name">Company Name</label>
                 <input type="text" id="company-name" name="company-name" required>
@@ -51,6 +55,13 @@
                 <label for="annual-revenue">Annual Revenue (ZAR)</label>
                 <input type="number" id="annual-revenue" name="annual-revenue" required>
             </div>
+
+            <div class="form-group">
+                <label for="directors">Number of Directors</label>
+                <input type="number" id="directors" name="directors" min="1" required>
+            </div>
+
+            <div id="directors-info"></div>
 
             <div class="form-group">
                 <button type="submit">Submit</button>
