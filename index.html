@@ -9,102 +9,81 @@
 </head>
 <body>
     <header>
-        <img src="assets/img/absa-logo.png" alt="ABSA Logo" class="logo">
+        <img src="assets/img/absa_logo.png" alt="ABSA Logo" class="logo">
     </header>
     <div class="container">
         <h2>SME Onboarding Form</h2>
-        <form id="onboarding-form" action="#" method="POST" enctype="multipart/form-data">
-            <!-- Applicant Information Section -->
-            <section>
-                <h3>Applicant Information</h3>
+        <form id="onboarding-form" action="https://3fy06s97c3.execute-api.eu-west-1.amazonaws.com/prod" method="POST" enctype="multipart/form-data">
+            <!-- First Section: Applicant Information -->
+            <h3>Applicant Information</h3>
+            <div class="form-group">
+                <label for="company-name">Company Name</label>
+                <input type="text" id="company-name" name="company-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="owner-name">Owner's Name</label>
+                <input type="text" id="owner-name" name="owner-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="is-director">Are you also a director?</label>
+                <select id="is-director" name="is-director" required>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <!-- Section for Director Information -->
+            <div id="directors-info">
+                <h3>Director Information</h3>
+                <div class="form-group">
+                    <label for="director-name">Director Name</label>
+                    <input type="text" id="director-name" name="director-name" required>
+                </div>
 
                 <div class="form-group">
-                    <label for="company-name">Company Name</label>
-                    <input type="text" id="company-name" name="company-name" required>
+                    <label for="director-id">Director ID Number</label>
+                    <input type="text" id="director-id" name="director-id" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="owner-name">Applicant's Name</label>
-                    <input type="text" id="owner-name" name="owner-name" required>
+                    <label for="director-address">Director Address</label>
+                    <input type="text" id="director-address" name="director-address" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="director-id-upload">Upload Director ID</label>
+                    <input type="file" id="director-id-upload" name="director-id-upload" accept=".jpg, .jpeg, .png, .pdf" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" required>
+                    <label for="director-address-proof">Upload Proof of Address</label>
+                    <input type="file" id="director-address-proof" name="director-address-proof" accept=".jpg, .jpeg, .png, .pdf" required>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="applicant-is-director">Are you also a Director?</label>
-                    <select id="applicant-is-director" name="applicant-is-director" required>
-                        <option value="">Select</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-            </section>
-
-            <!-- Directors Information Section -->
-            <section>
-                <h3>Directors Information</h3>
-
-                <div class="form-group">
-                    <label for="directors">Number of Directors</label>
-                    <input type="number" id="directors" name="directors" min="1" required>
-                </div>
-
-                <div id="directors-info">
-                    <!-- Directors details will be dynamically inserted here based on the number of directors -->
-                </div>
-            </section>
-
-            <!-- Business Documents Section -->
-            <section>
-                <h3>Business Documents</h3>
-
-                <div class="form-group">
-                    <label for="cipc-documents">Upload CIPC Provided Documents</label>
-                    <input type="file" id="cipc-documents" name="cipc-documents[]" multiple required>
-                </div>
-            </section>
+            <!-- Second Section: Business Documents -->
+            <h3>Business Documents</h3>
+            <div class="form-group">
+                <label for="cipc-documents">Upload CIPC Documents</label>
+                <input type="file" id="cipc-documents" name="cipc-documents" accept=".jpg, .jpeg, .png, .pdf" required>
+            </div>
 
             <div class="form-group">
                 <button type="submit">Submit</button>
             </div>
         </form>
     </div>
-
-    <script>
-        document.getElementById('directors').addEventListener('input', function() {
-            const numDirectors = this.value;
-            const directorsInfo = document.getElementById('directors-info');
-            directorsInfo.innerHTML = '';
-
-            for (let i = 0; i < numDirectors; i++) {
-                const directorIndex = i + 1;
-                const isApplicant = document.getElementById('applicant-is-director').value === 'yes';
-
-                directorsInfo.innerHTML += \`
-                    <h4>Director \${directorIndex}</h4>
-                    <div class="form-group">
-                        <label for="director-name-\${directorIndex}">Director's Name</label>
-                        <input type="text" id="director-name-\${directorIndex}" name="director-name-\${directorIndex}" \${isApplicant && i === 0 ? 'value="' + document.getElementById('owner-name').value + '"' : ''} required>
-                    </div>
-                    <div class="form-group">
-                        <label for="director-id-\${directorIndex}">Upload ID Document</label>
-                        <input type="file" id="director-id-\${directorIndex}" name="director-id-\${directorIndex}" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="director-address-\${directorIndex}">Upload Proof of Address</label>
-                        <input type="file" id="director-address-\${directorIndex}" name="director-address-\${directorIndex}" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
-                \`;
-            }
-        });
-    </script>
 </body>
 </html>
