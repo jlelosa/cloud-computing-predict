@@ -9,66 +9,102 @@
 </head>
 <body>
     <header>
-        <img src="assets/img/absa logo.png" alt="ABSA Logo" class="logo">
+        <img src="assets/img/absa-logo.png" alt="ABSA Logo" class="logo">
     </header>
     <div class="container">
         <h2>SME Onboarding Form</h2>
         <form id="onboarding-form" action="#" method="POST" enctype="multipart/form-data">
-            <!-- Existing Form Fields -->
+            <!-- Applicant Information Section -->
+            <section>
+                <h3>Applicant Information</h3>
 
-            <div class="form-group">
-                <label for="company-name">Company Name</label>
-                <input type="text" id="company-name" name="company-name" required>
-            </div>
+                <div class="form-group">
+                    <label for="company-name">Company Name</label>
+                    <input type="text" id="company-name" name="company-name" required>
+                </div>
 
-            <div class="form-group">
-                <label for="owner-name">Owner's Name</label>
-                <input type="text" id="owner-name" name="owner-name" required>
-            </div>
+                <div class="form-group">
+                    <label for="owner-name">Applicant's Name</label>
+                    <input type="text" id="owner-name" name="owner-name" required>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
 
-            <div class="form-group">
-                <label for="industry">Industry</label>
-                <select id="industry" name="industry" required>
-                    <option value="">Select Industry</option>
-                    <option value="finance">Finance</option>
-                    <option value="retail">Retail</option>
-                    <option value="manufacturing">Manufacturing</option>
-                    <option value="technology">Technology</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="applicant-is-director">Are you also a Director?</label>
+                    <select id="applicant-is-director" name="applicant-is-director" required>
+                        <option value="">Select</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </section>
 
-            <div class="form-group">
-                <label for="employees">Number of Employees</label>
-                <input type="number" id="employees" name="employees" required>
-            </div>
+            <!-- Directors Information Section -->
+            <section>
+                <h3>Directors Information</h3>
 
-            <div class="form-group">
-                <label for="annual-revenue">Annual Revenue (ZAR)</label>
-                <input type="number" id="annual-revenue" name="annual-revenue" required>
-            </div>
+                <div class="form-group">
+                    <label for="directors">Number of Directors</label>
+                    <input type="number" id="directors" name="directors" min="1" required>
+                </div>
 
-            <div class="form-group">
-                <label for="directors">Number of Directors</label>
-                <input type="number" id="directors" name="directors" min="1" required>
-            </div>
+                <div id="directors-info">
+                    <!-- Directors details will be dynamically inserted here based on the number of directors -->
+                </div>
+            </section>
 
-            <div id="directors-info"></div>
+            <!-- Business Documents Section -->
+            <section>
+                <h3>Business Documents</h3>
+
+                <div class="form-group">
+                    <label for="cipc-documents">Upload CIPC Provided Documents</label>
+                    <input type="file" id="cipc-documents" name="cipc-documents[]" multiple required>
+                </div>
+            </section>
 
             <div class="form-group">
                 <button type="submit">Submit</button>
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('directors').addEventListener('input', function() {
+            const numDirectors = this.value;
+            const directorsInfo = document.getElementById('directors-info');
+            directorsInfo.innerHTML = '';
+
+            for (let i = 0; i < numDirectors; i++) {
+                const directorIndex = i + 1;
+                const isApplicant = document.getElementById('applicant-is-director').value === 'yes';
+
+                directorsInfo.innerHTML += \`
+                    <h4>Director \${directorIndex}</h4>
+                    <div class="form-group">
+                        <label for="director-name-\${directorIndex}">Director's Name</label>
+                        <input type="text" id="director-name-\${directorIndex}" name="director-name-\${directorIndex}" \${isApplicant && i === 0 ? 'value="' + document.getElementById('owner-name').value + '"' : ''} required>
+                    </div>
+                    <div class="form-group">
+                        <label for="director-id-\${directorIndex}">Upload ID Document</label>
+                        <input type="file" id="director-id-\${directorIndex}" name="director-id-\${directorIndex}" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="director-address-\${directorIndex}">Upload Proof of Address</label>
+                        <input type="file" id="director-address-\${directorIndex}" name="director-address-\${directorIndex}" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                \`;
+            }
+        });
+    </script>
 </body>
 </html>
